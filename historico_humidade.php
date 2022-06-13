@@ -28,7 +28,7 @@ $result = mysqli_query($con, $query);
      while($rows=$result->fetch_assoc())
      {
     ?>
-        <!--TABELA COM INFORMAÇÃO DO SENSOR DE TEMPERATURA-->
+        <!--TABELA COM INFORMAÇÃO DO SENSOR DE HUMIDADE-->
         <div class="card" style="margin-top: 20px">
             <div class="card-header borda">
                 <b><?php echo "<td>" . $rows["nome"] . "</td>" ?></b>

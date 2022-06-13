@@ -28,7 +28,7 @@ $result = mysqli_query($con, $query);
      while($rows=$result->fetch_assoc())
      {
     ?>
-        <!--TABELA COM INFORMAÇÃO DO SENSOR DE TEMPERATURA-->
+        <!--TABELA COM INFORMAÇÃO DA PORTA-->
         <div class="card" style="margin-top: 20px">
             <div class="card-header borda">
                 <b><?php echo "<td>" . $rows["nome"] . "</td>" ?></b>
@@ -49,7 +49,7 @@ $result = mysqli_query($con, $query);
                         </thead>
 
                         <?php
-                        //Por cada log da humidade que encontra no ficheiro
+                        //Por cada log da porta que encontra no ficheiro
                             $values = explode(';', $rows["log"]);
                             echo "<tr>";
                             echo "<td>" . $values[0] . "</td>";

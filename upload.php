@@ -1,4 +1,5 @@
 <?php
+#Código para dar upload de imagens
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_FILES['imagem'])) {
         // echo ($_FILES['imagem']['name']);
