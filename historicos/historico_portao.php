@@ -3,10 +3,10 @@
 if (session_status() == PHP_SESSION_DISABLED) {
     session_start();
 }
-include('connection.php');
-include('api/api.php');
+include('../connection.php');
+include('../api/api.php');
 
-$query = "select * from luminosidade";
+$query = "select * from garage_door";
 $result = mysqli_query($con, $query);
 ?>
 
@@ -24,11 +24,11 @@ $result = mysqli_query($con, $query);
 </head>
 
 <body>
-    <?php include 'nav.php';
+    <?php include('../paginas/nav.php');
      while($rows=$result->fetch_assoc())
      {
     ?>
-        <!--TABELA COM INFORMAÇÃO DO SENSOR DE LUMINOSIDADE-->
+        <!--TABELA COM INFORMAÇÃO DO PORTÃO-->
         <div class="card" style="margin-top: 20px">
             <div class="card-header borda">
                 <b><?php echo "<td>" . $rows["nome"] . "</td>" ?></b>
@@ -49,11 +49,11 @@ $result = mysqli_query($con, $query);
                         </thead>
 
                         <?php
-                        //Por cada log da humidade que encontra no ficheiro
+                        //Por cada log do portão que encontra no ficheiro
                             $values = explode(';', $rows["log"]);
                             echo "<tr>";
                             echo "<td>" . $values[0] . "</td>";
-                            echo "<td>" . $values[1] . "%" . "</td>";
+                            echo "<td>" . $values[1] . "" . "</td>";
                             echo "</tr>";
                         ?>
                     </table>

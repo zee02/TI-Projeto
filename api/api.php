@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
-include $_SERVER["DOCUMENT_ROOT"] . "/TI-Projeto/connection.php";
+include('../connection.php');
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     #Verifica se os campos estão preenchidos

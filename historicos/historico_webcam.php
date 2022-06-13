@@ -3,10 +3,10 @@
 if (session_status() == PHP_SESSION_DISABLED) {
     session_start();
 }
-include('connection.php');
-include('api/api.php');
+include('../connection.php');
+include('../api/api.php');
 
-$query = "select * from lampada";
+$query = "select * from porta";
 $result = mysqli_query($con, $query);
 ?>
 
@@ -24,11 +24,11 @@ $result = mysqli_query($con, $query);
 </head>
 
 <body>
-    <?php include 'nav.php';
+    <?php include('../paginas/nav.php');
      while($rows=$result->fetch_assoc())
      {
     ?>
-        <!--TABELA COM INFORMAÇÃO DA LAMPADA-->
+        <!--TABELA COM INFORMAÇÃO DA WEBCAM-->
         <div class="card" style="margin-top: 20px">
             <div class="card-header borda">
                 <b><?php echo "<td>" . $rows["nome"] . "</td>" ?></b>
@@ -49,16 +49,14 @@ $result = mysqli_query($con, $query);
                         </thead>
 
                         <?php
-                        //Por cada log da lampada que encontra no ficheiro
+                        //Por cada log da webcam que encontra no ficheiro
                             $values = explode(';', $rows["log"]);
                             echo "<tr>";
                             echo "<td>" . $values[0] . "</td>";
                             if($values[1] == 1){
-                                echo "<td>" . "Luz com pouca intensidade..."  . "</td>";
-                            } elseif($values[1] == 2){
-                                echo "<td>" . "Luz com muita intensidade"  . "</td>";
-                            }else{
-                                echo "<td>" . "Luz desligada"  . "</td>";
+                                echo "<td>" . "Porta Fechada"  . "</td>";
+                            } else{
+                                echo "<td>" . "Porta Aberta"  . "</td>";
                             }
                             echo "</tr>";
                         ?>

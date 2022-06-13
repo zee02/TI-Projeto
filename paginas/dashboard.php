@@ -1,8 +1,8 @@
 <?php
 #Verifica se o utilizador está a aceder à dashboard com sessão iniciada
 session_start();
-include('connection.php');
-include('api/api.php');
+include('../connection.php');
+include('../api/api.php');
 
 #Query para ver o nivel de permissão do utilizador loggado
 $query = "select permission_level from user where username = '{$_SESSION['username']}'";
@@ -74,7 +74,7 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>Plataforma IoT</title>
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
     <style>
         #historico {
             color: orange;
@@ -118,7 +118,7 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
                     <p style="font-size:small">Tecnologias da Internet - Engenharia Informática</p>
                 </div>
                 <div class="float-child" style="display:inline">
-                    <img src="images/estg.png" class="float-end" alt="ESTG" width="300px">
+                    <img src="../images/estg.png" class="float-end" alt="ESTG" width="300px">
                 </div>
             </div>
         </div>
@@ -135,27 +135,27 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
                 <div class="card">
                     <div class="card-header" style="text-align: center;"><b><?php echo $row_luminosidade["nome"] . ": " . $row_luminosidade["valor"] . "%" ?></b></div>
                     <div class="card-body">
-                        <img src="images/dia.png" alt="humidade" class="img">
+                        <img src="../images/dia.png" alt="humidade" class="img">
                     </div>
-                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_luminosidade["hora"] ?> - <a id="historico" href="historico_luminosidade.php">Histórico</a></div>
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_luminosidade["hora"] ?> - <a id="historico" href="../historicos/historico_luminosidade.php">Histórico</a></div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="card">
                     <div class="card-header" style="text-align: center;"><b> <?php echo $row_temperatura["nome"] . ": " . $row_temperatura["valor"] . "º" ?></b></div>
                     <div class="card-body">
-                        <img src="images/temperature.png" alt="humidade" class="img">
+                        <img src="../images/temperature.png" alt="humidade" class="img">
                     </div>
-                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_temperatura["hora"] ?> - <a id="historico" href="historico_temperatura.php">Histórico</a></div>
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_temperatura["hora"] ?> - <a id="historico" href="../historicos/historico_temperatura.php">Histórico</a></div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="card">
                     <div class="card-header" style="text-align: center;"><b> <?php echo $row_humidade["nome"] . ": " . $row_humidade["valor"] . "%" ?></b></div>
                     <div class="card-body">
-                        <img src="images/humidity.png" alt="humidade" class="img">
+                        <img src="../images/humidity.png" alt="humidade" class="img">
                     </div>
-                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_humidade["hora"] ?> - <a id="historico" href="historico_humidade.php">Histórico</a></div>
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_humidade["hora"] ?> - <a id="historico" href="historicos/../historicos/historico_humidade.php">Histórico</a></div>
                 </div>
             </div>
             <div class="col-sm-4" style="padding-top:20px">
@@ -165,19 +165,19 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Movimento: Detetado</b></div>
                         <div class="card-body">
-                            <img src="images/movimento.png" alt="movimento" class="img">
+                            <img src="../images/movimento.png" alt="movimento" class="img">
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Movimento: Não detetado</b></div>
                         <div class="card-body">
-                            <img src="images/parado.png" alt="movimento" class="img">
+                            <img src="../images/parado.png" alt="movimento" class="img">
                         </div>
                     <?php
                     }
                     ?>
-                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_movimento["hora"] ?> - <a id="historico" href="historico_movimento.php">Histórico</a></div>
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_movimento["hora"] ?> - <a id="historico" href="../historicos/historico_movimento.php">Histórico</a></div>
                 </div>
             </div>
             <div class="col-sm-4" style="padding-top:20px">
@@ -187,19 +187,19 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Porta: Aberta </b></div>
                         <div class="card-body">
-                            <img src="images/open_door.png" alt="Porta" class="img">
+                            <img src="../images/open_door.png" alt="Porta" class="img">
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Porta: Fechada </b></div>
                         <div class="card-body">
-                            <img src="images/closed_door.png" alt="porta" class="img">
+                            <img src="../images/closed_door.png" alt="porta" class="img">
                         </div>
                     <?php
                     }
                     ?>
-                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_porta["hora"] ?> - <a id="historico" href="historico_porta.php">Histórico</a></div>
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_porta["hora"] ?> - <a id="historico" href="../historicos/historico_porta.php">Histórico</a></div>
                 </div>
             </div>
             <div class="col-sm-4" style="padding-top:20px">
@@ -209,20 +209,20 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Incendio: Detetado </b></div>
                         <div class="card-body">
-                            <img src="images/fogo.png" alt="incendio" class="img">
+                            <img src="../images/fogo.png" alt="incendio" class="img">
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Incendio: Não detetado </b></div>
                         <div class="card-body">
-                            <img src="images/fire_off.png" alt="incendio" class="img">
+                            <img src="../images/fire_off.png" alt="incendio" class="img">
                         </div>
                     <?php
                     }
                     ?>
 
-                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_incendio["hora"] ?> - <a id="historico" href="historico_incendio.php">Histórico</a></div>
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_incendio["hora"] ?> - <a id="historico" href="../historicos/historico_incendio.php">Histórico</a></div>
                 </div>
             </div>
             <div class="col-sm-4" style="padding-top:20px">
@@ -232,20 +232,20 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Extintor: Ligado </b></div>
                         <div class="card-body">
-                            <img src="images/sprinkler_on.png" alt="sprinkler" class="img">
+                            <img src="../images/sprinkler_on.png" alt="sprinkler" class="img">
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Extintor: Desligado</b></div>
                         <div class="card-body">
-                            <img src="images/sprinkler_off.png" alt="sprinkler" class="img">
+                            <img src="../images/sprinkler_off.png" alt="sprinkler" class="img">
                         </div>
                     <?php
                     }
                     ?>
 
-                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_sprinkler["hora"] ?> - <a id="historico" href="historico_sprinkler.php">Histórico</a></div>
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_sprinkler["hora"] ?> - <a id="historico" href="../historicos/historico_sprinkler.php">Histórico</a></div>
                 </div>
             </div>
             <div class="col-sm-4" style="padding-top:20px">
@@ -255,20 +255,20 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Alarme: Ligado </b></div>
                         <div class="card-body">
-                            <img src="images/alarme_on.png" alt="alarme" class="img">
+                            <img src="../images/alarme_on.png" alt="alarme" class="img">
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Alarme: Desligado</b></div>
                         <div class="card-body">
-                            <img src="images/alarme_off.png" alt="alarme" class="img">
+                            <img src="../images/alarme_off.png" alt="alarme" class="img">
                         </div>
                     <?php
                     }
                     ?>
 
-                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_alarme["hora"] ?> - <a id="historico" href="historico_alarme.php">Histórico</a></div>
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_alarme["hora"] ?> - <a id="historico" href="../historicos/historico_alarme.php">Histórico</a></div>
                 </div>
             </div>
             <div class="col-sm-4" style="padding-top:20px">
@@ -278,20 +278,20 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Janela: Aberta </b></div>
                         <div class="card-body">
-                            <img src="images/janela_aberta.png" alt="janela" class="img">
+                            <img src="../images/janela_aberta.png" alt="janela" class="img">
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Janela: Fechada</b></div>
                         <div class="card-body">
-                            <img src="images/janela_fechada.png" alt="janela" class="img">
+                            <img src="../images/janela_fechada.png" alt="janela" class="img">
                         </div>
                     <?php
                     }
                     ?>
 
-                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_janela["hora"] ?> - <a id="historico" href="historico_janela.php">Histórico</a></div>
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_janela["hora"] ?> - <a id="historico" href="../historicos/historico_janela.php">Histórico</a></div>
                 </div>
             </div>
             <div class="col-sm-4" style="padding-top:20px">
@@ -301,26 +301,26 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Estado da Lampada: Pouca intensidade </b></div>
                         <div class="card-body">
-                            <img src="images/led_on.png" alt="Lampada Ligada" class="img">
+                            <img src="../images/led_on.png" alt="Lampada Ligada" class="img">
                         </div>
                     <?php
                     } else if ($row_lampada["valor"] == 2) {
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Estado da Lampada: Muita intensidade </b></div>
                         <div class="card-body">
-                            <img src="images/led_on.png" alt="Lampada Ligada" class="img">
+                            <img src="../images/led_on.png" alt="Lampada Ligada" class="img">
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Estado da Lampada: Desligada </b></div>
                         <div class="card-body">
-                            <img src="images/led_off.png" alt="Lampada Desligada" class="img">
+                            <img src="../images/led_off.png" alt="Lampada Desligada" class="img">
                         </div>
                     <?php
                     }
                     ?>
-                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_lampada["hora"] ?> - <a id="historico" href="historico_lampada.php">Histórico</a></div>
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_lampada["hora"] ?> - <a id="historico" href="../historicos/historico_lampada.php">Histórico</a></div>
                 </div>
             </div>
 
@@ -331,19 +331,19 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Portão Traseiro: Aberto </b></div>
                         <div class="card-body">
-                            <img src="images/garage_open.png" alt="Porta Aberta" class="img">
+                            <img src="../images/garage_open.png" alt="Porta Aberta" class="img">
                         </div>
                     <?php
                     } else {
                     ?>
                         <div class="card-header" style="text-align: center;"><b>Portão Traseiro: Fechado </b></div>
                         <div class="card-body">
-                            <img src="images/garage_closed.png" alt="Porta Fechada" class="img">
+                            <img src="../images/garage_closed.png" alt="Porta Fechada" class="img">
                         </div>
                     <?php
                     }
                     ?>
-                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_garage["hora"] ?> - <a id="historico" href="historico_portao.php">Histórico</a><form method="post">
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_garage["hora"] ?> - <a id="historico" href="../historicos/historico_portao.php">Histórico</a><form method="post">
                             <input type="submit" value="Abrir Portão" name="garage_door_open"><input type="submit" value="Fechar Portão" name="garage_door_close"></form></div>
                 </div>
             </div>
@@ -354,7 +354,7 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
                     <div class="card-header" style="text-align: center;"><b>WebCam</b>
                     </div>
                     <div class="card-body">
-                        <img src='images/webcam.jpg?id=".time()."' alt="webcam" id="webcam" style="width: 230px;" class="img">
+                        <img src='../images/webcam.jpg?id=".time()."' alt="webcam" id="webcam" style="width: 230px;" class="img">
                     </div>
                     <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_webcam["hora"] ?>
                         <form method="post">

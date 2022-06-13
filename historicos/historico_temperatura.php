@@ -3,10 +3,10 @@
 if (session_status() == PHP_SESSION_DISABLED) {
     session_start();
 }
-include('connection.php');
-include('api/api.php');
+include('../connection.php');
+include('../api/api.php');
 
-$query = "select * from porta";
+$query = "select * from temperatura";
 $result = mysqli_query($con, $query);
 ?>
 
@@ -24,11 +24,11 @@ $result = mysqli_query($con, $query);
 </head>
 
 <body>
-    <?php include 'nav.php';
+    <?php include('../paginas/nav.php');
      while($rows=$result->fetch_assoc())
      {
     ?>
-        <!--TABELA COM INFORMAÇÃO DA PORTA-->
+        <!--TABELA COM INFORMAÇÃO DO SENSOR DE TEMPERATURA-->
         <div class="card" style="margin-top: 20px">
             <div class="card-header borda">
                 <b><?php echo "<td>" . $rows["nome"] . "</td>" ?></b>
@@ -49,15 +49,11 @@ $result = mysqli_query($con, $query);
                         </thead>
 
                         <?php
-                        //Por cada log da porta que encontra no ficheiro
+                        //Por cada log da humidade que encontra no ficheiro
                             $values = explode(';', $rows["log"]);
                             echo "<tr>";
                             echo "<td>" . $values[0] . "</td>";
-                            if($values[1] == 1){
-                                echo "<td>" . "Porta Fechada"  . "</td>";
-                            } else{
-                                echo "<td>" . "Porta Aberta"  . "</td>";
-                            }
+                            echo "<td>" . $values[1]  . "</td>";
                             echo "</tr>";
                         ?>
                     </table>
