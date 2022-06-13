@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_DISABLED) {
 include('../connection.php');
 include('../api/api.php');
 
-$query = "select * from luminosidade";
+$query = "select * from movimento";
 $result = mysqli_query($con, $query);
 ?>
 
@@ -28,7 +28,7 @@ $result = mysqli_query($con, $query);
      while($rows=$result->fetch_assoc())
      {
     ?>
-        <!--TABELA COM INFORMAÇÃO DO SENSOR DE LUMINOSIDADE-->
+        <!--TABELA COM INFORMAÇÃO DO SENSOR DE Movimento-->
         <div class="card" style="margin-top: 20px">
             <div class="card-header borda">
                 <b><?php echo "<td>" . $rows["nome"] . "</td>" ?></b>
@@ -49,11 +49,15 @@ $result = mysqli_query($con, $query);
                         </thead>
 
                         <?php
-                        //Por cada log da luminosidade que encontra na base de dados
+                        //Por cada log de movimento que encontra na base de dados
                             $values = explode(';', $rows["log"]);
                             echo "<tr>";
                             echo "<td>" . $values[0] . "</td>";
-                            echo "<td>" . $values[1] . "%" . "</td>";
+                            if($values[1] == 1){
+                                echo "<td>" . "Existe movimento..." . "</td>";
+                            }else{
+                                echo "<td>" . "Não existe movimento" . "</td>";
+                            }
                             echo "</tr>";
                         ?>
                     </table>

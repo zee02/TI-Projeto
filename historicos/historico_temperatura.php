@@ -49,7 +49,7 @@ $result = mysqli_query($con, $query);
                         </thead>
 
                         <?php
-                        //Por cada log da humidade que encontra no ficheiro
+                        //Por cada log da temperatura que encontra na base de dados
                             $values = explode(';', $rows["log"]);
                             echo "<tr>";
                             echo "<td>" . $values[0] . "</td>";

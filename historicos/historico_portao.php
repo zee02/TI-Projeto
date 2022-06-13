@@ -49,7 +49,7 @@ $result = mysqli_query($con, $query);
                         </thead>
 
                         <?php
-                        //Por cada log do portão que encontra no ficheiro
+                        //Por cada log do portão que encontra na base de dados
                             $values = explode(';', $rows["log"]);
                             echo "<tr>";
                             echo "<td>" . $values[0] . "</td>";

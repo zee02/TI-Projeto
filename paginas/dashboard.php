@@ -268,7 +268,7 @@ $row_garage = $result->fetch_array(MYSQLI_ASSOC);
                     }
                     ?>
 
-                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_alarme["hora"] ?> - <a id="historico" href="../historicos/historico_alarme.php">Histórico</a></div>
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_alarme["hora"] ?> - <a id="historico" href="../historicos/historico_speaker.php">Histórico</a></div>
                 </div>
             </div>
             <div class="col-sm-4" style="padding-top:20px">

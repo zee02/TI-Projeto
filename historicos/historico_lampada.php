@@ -49,14 +49,14 @@ $result = mysqli_query($con, $query);
                         </thead>
 
                         <?php
-                        //Por cada log da lampada que encontra no ficheiro
+                        //Por cada log da lampada que encontra na base de dados
                             $values = explode(';', $rows["log"]);
                             echo "<tr>";
                             echo "<td>" . $values[0] . "</td>";
                             if($values[1] == 1){
-                                echo "<td>" . "Luz com pouca intensidade..."  . "</td>";
+                                echo "<td>" . "Luz com pouca intensidade..." . "</td>";
                             } elseif($values[1] == 2){
-                                echo "<td>" . "Luz com muita intensidade"  . "</td>";
+                                echo "<td>" . "Luz com muita intensidade" . "</td>";
                             }else{
                                 echo "<td>" . "Luz desligada"  . "</td>";
                             }
