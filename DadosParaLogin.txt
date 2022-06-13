@@ -1,0 +1,13 @@
+----Diversos logins----- 
+Admin:
+username: admin
+password: admin
+-----------------------------------
+Worker:
+username: worker
+password: worker
+-----------------------------------
+Analista de dados:
+username: analist
+password: analist
+

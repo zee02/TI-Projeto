@@ -4,15 +4,18 @@ session_start();
 include('connection.php');
 include('api/api.php');
 
+#Query para ver o nivel de permissão do utilizador loggado
 $query = "select permission_level from user where username = '{$_SESSION['username']}'";
 $result = mysqli_query($con, $query);
 $levelperm = mysqli_fetch_assoc($result);
 
+#se o utilizador for um "worker", não terá acesso à dashboard
 if ($levelperm['permission_level'] == 0) {
     header("refresh: 3;url=index.php");
     die("Acesso restrito.");
 }
 
+#Querys que vão buscar todas as informações relativas aos sensores
 $query_temperatura = "select * from temperatura ORDER BY id DESC LIMIT 1";
 $result = $con->query($query_temperatura);
 $row_temperatura = $result->fetch_array(MYSQLI_ASSOC);
@@ -58,6 +61,9 @@ $query_webcam = "select * from webcam ORDER BY id DESC LIMIT 1";
 $result = $con->query($query_webcam);
 $row_webcam = $result->fetch_array(MYSQLI_ASSOC);
 
+$query_garage = "select * from garage_door ORDER BY id DESC LIMIT 1";
+$result = $con->query($query_garage);
+$row_garage = $result->fetch_array(MYSQLI_ASSOC);
 
 ?>
 
@@ -76,7 +82,7 @@ $row_webcam = $result->fetch_array(MYSQLI_ASSOC);
     </style>
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
-    <meta http-equiv="refresh" content="5">
+    <!-- <meta http-equiv="refresh" content="5"> -->
 </head>
 
 <style>
@@ -117,6 +123,7 @@ $row_webcam = $result->fetch_array(MYSQLI_ASSOC);
             </div>
         </div>
     </div><br>
+
     <?php 
     if ($levelperm['permission_level'] == 1 && $levelperm['permission_level'] != 2 && $levelperm['permission_level'] != 0) {
     ?>
@@ -317,10 +324,34 @@ $row_webcam = $result->fetch_array(MYSQLI_ASSOC);
                 </div>
             </div>
 
+            <div class="col-sm-4" style="padding-top:20px">
+                <div class="card">
+                    <?php
+                    if ($row_garage["valor"] == 1) {
+                    ?>
+                        <div class="card-header" style="text-align: center;"><b>Portão Traseiro: Aberto </b></div>
+                        <div class="card-body">
+                            <img src="images/garage_open.png" alt="Porta Aberta" class="img">
+                        </div>
+                    <?php
+                    } else {
+                    ?>
+                        <div class="card-header" style="text-align: center;"><b>Portão Traseiro: Fechado </b></div>
+                        <div class="card-body">
+                            <img src="images/garage_closed.png" alt="Porta Fechada" class="img">
+                        </div>
+                    <?php
+                    }
+                    ?>
+                    <div class="card-footer" style="text-align: center;">Atualização: <?php echo $row_garage["hora"] ?> - <a id="historico" href="historico_portao.php">Histórico</a><form method="post">
+                            <input type="submit" value="Abrir Portão" name="garage_door_open"><input type="submit" value="Fechar Portão" name="garage_door_close"></form></div>
+                </div>
+            </div>
+
 
             <div class="col-sm-4" style="padding-top:20px">
                 <div class="card">
-                    <div class="card-header" style="text-align: center;"><b>WebCam</b>-
+                    <div class="card-header" style="text-align: center;"><b>WebCam</b>
                     </div>
                     <div class="card-body">
                         <img src='images/webcam.jpg?id=".time()."' alt="webcam" id="webcam" style="width: 230px;" class="img">
@@ -399,15 +430,11 @@ $row_webcam = $result->fetch_array(MYSQLI_ASSOC);
                                 <?php
                                 if ($row_luminosidade["valor"] == 0) {
                                 ?>
-                                    <td><span class="badge rounded-pill bg-danger">Desligada</span></td>
+                                    <td><span class="badge rounded-pill bg-danger">Sem Luminosidade</span></td>
                                 <?php
-                                } elseif ($row_luminosidade["valor"] == 1) {
+                                }else {
                                 ?>
-                                    <td><span class="badge rounded-pill bg-warning text-dark">Média</span></td>
-                                <?php
-                                } else {
-                                ?>
-                                    <td><span class="badge rounded-pill bg-danger">Muito Forte</span></td>
+                                    <td><span class="badge rounded-pill bg-success">Com Luminosidade</span></td>
                                 <?php
                                 }
                                 ?>
@@ -430,14 +457,108 @@ $row_webcam = $result->fetch_array(MYSQLI_ASSOC);
                             </tr>
                             <tr>
                                 <td><?php echo $row_porta["nome"] ?></td>
-                                <td><?php echo $row_porta["valor"] ?></td>
+                                <?php 
+                                    if($row_porta["valor"] == "0,0"){
+                                    ?>   
+                                        <td><?php echo 0 ?></td>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <td><?php echo 1 ?></td>
+                                    <?php
+                                    }
+                                ?>
                                 <td><?php echo $row_porta["hora"] ?></td>
                                 <?php
-                                if ($row_porta["valor"] == 0) {
+                                if ($row_porta["valor"] == "0,0") {
                                 ?>
                                     <td><span class="badge rounded-pill bg-danger">Fechada</span></td>
                                 <?php
                                 } else {
+                                ?>
+                                    <td><span class="badge rounded-pill bg-success">Aberta</span></td>
+                                <?php
+                                }
+                                ?>
+                            </tr>
+                            <tr>
+                                <td><?php echo $row_movimento["nome"] ?></td>
+                                <td><?php echo $row_movimento["valor"] ?></td>
+                                <td><?php echo $row_movimento["hora"] ?></td>
+                                <?php
+                                if ($row_movimento["valor"] == 0) {
+                                ?>
+                                    <td><span class="badge rounded-pill bg-danger">Sem movimento</span></td>
+                                <?php
+                                }else {
+                                ?>
+                                    <td><span class="badge rounded-pill bg-success">Movimento Detectado</span></td>
+                                <?php
+                                }
+                                ?>
+                            </tr>
+                            <tr>
+                                <td><?php echo $row_lampada["nome"] ?></td>
+                                <td><?php echo $row_lampada["valor"] ?></td>
+                                <td><?php echo $row_lampada["hora"] ?></td>
+                                <?php
+                                if ($row_lampada["valor"] == 0) {
+                                ?>
+                                    <td><span class="badge rounded-pill bg-danger">Desligada</span></td>
+                                <?php
+                                } elseif ($row_lampada["valor"] == 1) {
+                                ?>
+                                    <td><span class="badge rounded-pill bg-warning text-dark">Média</span></td>
+                                <?php
+                                } else {
+                                ?>
+                                    <td><span class="badge rounded-pill bg-danger">Muito Forte</span></td>
+                                <?php
+                                }
+                                ?>
+                            </tr>
+                            <tr>
+                                <td><?php echo $row_sprinkler["nome"] ?></td>
+                                <td><?php echo $row_sprinkler["valor"] ?></td>
+                                <td><?php echo $row_sprinkler["hora"] ?></td>
+                                <?php
+                                if ($row_sprinkler["valor"] == 0) {
+                                ?>
+                                    <td><span class="badge rounded-pill bg-danger">Desligado</span></td>
+                                <?php
+                                }else {
+                                ?>
+                                    <td><span class="badge rounded-pill bg-success">Ligado</span></td>
+                                <?php
+                                }
+                                ?>
+                            </tr>
+                            <tr>
+                                <td><?php echo $row_alarme["nome"] ?></td>
+                                <td><?php echo $row_alarme["valor"] ?></td>
+                                <td><?php echo $row_alarme["hora"] ?></td>
+                                <?php
+                                if ($row_alarme["valor"] == 0) {
+                                ?>
+                                    <td><span class="badge rounded-pill bg-danger">Desligado</span></td>
+                                <?php
+                                }else {
+                                ?>
+                                    <td><span class="badge rounded-pill bg-success">Ligado</span></td>
+                                <?php
+                                }
+                                ?>
+                            </tr>
+                            <tr>
+                                <td><?php echo $row_janela["nome"] ?></td>
+                                <td><?php echo $row_janela["valor"] ?></td>
+                                <td><?php echo $row_janela["hora"] ?></td>
+                                <?php
+                                if ($row_janela["valor"] == 0) {
+                                ?>
+                                    <td><span class="badge rounded-pill bg-danger">Fechada</span></td>
+                                <?php
+                                }else {
                                 ?>
                                     <td><span class="badge rounded-pill bg-success">Aberta</span></td>
                                 <?php

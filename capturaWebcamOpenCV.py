@@ -5,6 +5,7 @@ from datetime import datetime
 import pytz
 from requests import (post, get)
 
+
 URL = "http://127.0.0.1/TI-Projeto/upload.php"
 
 def datahora():

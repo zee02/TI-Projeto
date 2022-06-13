@@ -23,7 +23,25 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $log = $hora . ";" . $valor . PHP_EOL;
         $query = "insert into webcam(hora,valor,log,nome) values ('{$hora}', '{$valor}', '{$log}', '{$nome}')";
         mysqli_query($con, $query);
-    } else {
+    }elseif (isset($_POST['garage_door_open'])) {
+        $nome = "garage_door";
+        $valor = 1;
+        date_default_timezone_set('Europe/London');
+        $dt = new DateTime();
+        $hora = $dt->format('Y/m/d H:i:s');
+        $log = $hora . ";" . $valor . PHP_EOL;
+        $query = "insert into garage_door(hora,valor,log,nome) values ('{$hora}', '{$valor}', '{$log}', '{$nome}')";
+        mysqli_query($con, $query);
+    } elseif (isset($_POST['garage_door_close'])) {
+        $nome = "garage_door";
+        $valor = 0;
+        date_default_timezone_set('Europe/London');
+        $dt = new DateTime();
+        $hora = $dt->format('Y/m/d H:i:s');
+        $log = $hora . ";" . $valor . PHP_EOL;
+        $query = "insert into garage_door(hora,valor,log,nome) values ('{$hora}', '{$valor}', '{$log}', '{$nome}')";
+        mysqli_query($con, $query);
+    }else {
         echo "Erro na API";
     }
 } elseif ($_SERVER['REQUEST_METHOD'] == "GET") {
