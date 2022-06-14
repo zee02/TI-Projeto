@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include('connection.php');  
+include('../connection.php');  
 #Verifica se a sessão está vazia, se estiver manda para a página index.php
 if(empty($_POST['username']) || empty($_POST['password'])){
     header('Location: index.php');
